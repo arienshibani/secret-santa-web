@@ -16,7 +16,7 @@
 		isOpen = false;
 	};
 
-	const currentLang = languages.find((l) => l.code === $currentLanguage) || languages[0];
+	$: currentLang = languages.find((l) => l.code === $currentLanguage) || languages[0];
 
 	const handleClickOutside = (event: MouseEvent) => {
 		const target = event.target as HTMLElement;

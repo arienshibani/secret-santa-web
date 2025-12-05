@@ -11,32 +11,46 @@
 		"success": "Suksess"
 	},
 	"step1": {
-		"title": "Secret Santa Oppsett 🎄",
+		"title": "Secret Santa 🎄",
 		"subtitle": "La oss sette opp din Secret Santa-utveksling!",
-		"eventNameLabel": "Arrangementsnavn (Valgfritt)",
-		"eventNamePlaceholder": "f.eks., bpk-julebord-2025",
+		"participantsLabel": "Antall deltakere",
+		"participantsPlaceholder": "Skriv inn antall personer",
+		"eventNameLabel": "Arrangementsnavn (valgfritt)",
+		"eventNamePlaceholder": "f.eks. julebord-med-familien",
 		"eventNameHelp": "La stå tomt for å auto-generere. Bruk kun bokstaver, tall og bindestreker.",
 		"pinLabel": "Admin-PIN",
 		"pinHelp": "Opprett en 6-sifret PIN for å få tilgang til oversikten",
-		"participantsLabel": "Antall deltakere",
-		"participantsPlaceholder": "Skriv inn antall personer",
-		"contactMethodLabel": "Foretrukket kontaktmetode",
-		"contactMethodSMS": "SMS",
-		"contactMethodEmail": "E-post",
-		"contactMethodBoth": "Begge",
+		"existingEventLink": "Allerede laget en lek?",
+		"howItWorksTitle": "Hva er Secret Santa? 🎁",
+		"howItWorks1": "Secret Santa er en morsom gaveutveksling der hver person tilfeldig får tildelt en annen person i gruppen å kjøpe gave til. Ingen vet hvem som har hvem før avsløringen! Selv ikke arrangøren heller.",
+		"howItWorks2": "Denne appen gjør det superenkelt: bare skriv inn alle navn og kontaktinfo, så lager vi automatisk hemmelige lenker for hver person. Når de klikker på sin lenke, ser de hvem de skal kjøpe gave til.",
+		"howItWorks3": "Du kan sende hver person sin hemmelige lenke via e-post eller SMS, og du kan følge opp hvem som har kjøpt sin gave i oversikten.",
 		"validation": {
 			"participantsRequired": "Vennligst skriv inn antall deltakere",
 			"participantsMin": "Du trenger minst 2 deltakere",
-			"contactMethodRequired": "Vennligst velg en kontaktmetode",
 			"pinRequired": "Vennligst skriv inn en 6-sifret PIN",
-			"pinLength": "PIN må være nøyaktig 6 sifre",
+			"pinLength": "PIN må være 6 sifre",
 			"eventNameInvalid": "Arrangementsnavn kan kun inneholde bokstaver, tall og bindestreker"
+		}
+	},
+	"existingEvent": {
+		"title": "Tilgang til eksisterende lek 🎄",
+		"subtitle": "Skriv inn arrangementsnavn og PIN for å få tilgang til oversikten",
+		"eventNameLabel": "Arrangementsnavn",
+		"pinLabel": "Admin-PIN",
+		"submit": "Gå til oversikt",
+		"validation": {
+			"eventNameRequired": "Vennligst skriv inn arrangementsnavn",
+			"pinRequired": "Vennligst skriv inn en 6-sifret PIN",
+			"pinLength": "PIN må være 6 sifre",
+			"invalidCredentials": "Ugyldig arrangementsnavn eller PIN"
 		}
 	},
 	"step2": {
 		"title": "Deltakere 🎁",
-		"subtitle": "Skriv inn detaljer for hver deltaker",
+		"subtitle": "Skriv inn detaljer for alle {{count}} deltakere",
 		"participant": "Deltaker",
+		"addParticipant": "Legg til deltaker",
 		"nameLabel": "Navn",
 		"namePlaceholder": "Skriv inn navn",
 		"emailLabel": "E-post",
@@ -45,7 +59,8 @@
 		"smsPlaceholder": "Skriv inn telefonnummer",
 		"validation": {
 			"nameRequired": "Navn er påkrevd",
-			"contactRequired": "Minst én kontaktmetode er påkrevd"
+			"contactRequired": "Minst én kontaktmetode er påkrevd",
+			"minParticipants": "Du trenger minst 2 deltakere"
 		}
 	},
 	"results": {
@@ -54,7 +69,15 @@
 		"participant": "Deltaker",
 		"url": "Tildelings-URL",
 		"copyUrl": "Kopier URL",
-		"adminLink": "Oversikt"
+		"sendEmail": "Send E-post",
+		"sendSms": "Send SMS",
+		"smsMessage": "Hei! Trykk på lenken under for å se din tildelte nissevenn i forbindelse med {{eventName}}: {{url}}",
+		"emailSubject": "Din Secret Santa-tildeling for {{eventName}} 🎄",
+		"emailBody": "Hei {{name}}!\n\nTrykk på lenken under for å se din tildelte nissevenn i forbindelse med {{eventName}}:\n{{url}}\n\nGod jul! 🎄🎁",
+		"adminLink": "Oversikt",
+		"adminPinLabel": "Admin-PIN:",
+		"adminPinHelp": "Lagre denne PIN-en for å få tilgang til oversikten senere",
+		"adminUrlLabel": "Oversikts-URL:"
 	},
 	"assignment": {
 		"title": "Din Secret Santa-tildeling 🎄",

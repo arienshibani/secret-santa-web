@@ -86,6 +86,6 @@
 <canvas
 	bind:this={canvas}
 	class="fixed inset-0 pointer-events-none z-0"
-	style="background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 100%);"
+	style="background: transparent;"
 ></canvas>
 

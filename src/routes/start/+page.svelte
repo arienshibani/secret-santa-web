@@ -3,8 +3,10 @@
 	import { t } from '$lib/i18n';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import SnowEffect from '$lib/components/SnowEffect.svelte';
+	import type { ContactMethod } from '$lib/utils/types';
 
 	let numParticipants = '';
+	let contactMethod: ContactMethod | '' = '';
 	let errors: Record<string, string> = {};
 
 	const validate = (): boolean => {
@@ -19,6 +21,10 @@
 			errors.numParticipants = $t('step1.validation.participantsMin');
 			return false;
 		}
+		if (!contactMethod) {
+			errors.contactMethod = $t('step1.validation.contactMethodRequired');
+			return false;
+		}
 		return true;
 	};
 
@@ -27,7 +33,8 @@
 		if (!validate()) return;
 
 		const params = new URLSearchParams({
-			numParticipants
+			numParticipants,
+			contactMethod
 		});
 		goto(`/participants?${params.toString()}`);
 	};
@@ -69,15 +76,53 @@
 					{/if}
 				</div>
 
-				<div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6">
-					<h3 class="text-lg font-semibold text-blue-900 mb-3">
-						{$t('step1.howItWorksTitle')}
-					</h3>
-					<div class="space-y-3 text-gray-700">
-						<p>{$t('step1.howItWorks1')}</p>
-						<p>{$t('step1.howItWorks2')}</p>
-						<p>{$t('step1.howItWorks3')}</p>
+				<div>
+					<fieldset>
+						<legend class="block text-sm font-medium text-gray-700 mb-3">
+							{$t('step1.contactMethodLabel')}
+						</legend>
+					<div class="space-y-2">
+						<label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-red-50 transition-colors {contactMethod === 'sms'
+							? 'border-red-500 bg-red-50'
+							: 'border-gray-300'}">
+							<input
+								type="radio"
+								name="contactMethod"
+								value="sms"
+								bind:group={contactMethod}
+								class="mr-3"
+							/>
+							<span class="text-lg">📱 {$t('step1.contactMethodSMS')}</span>
+						</label>
+						<label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-red-50 transition-colors {contactMethod === 'email'
+							? 'border-red-500 bg-red-50'
+							: 'border-gray-300'}">
+							<input
+								type="radio"
+								name="contactMethod"
+								value="email"
+								bind:group={contactMethod}
+								class="mr-3"
+							/>
+							<span class="text-lg">✉️ {$t('step1.contactMethodEmail')}</span>
+						</label>
+						<label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:bg-red-50 transition-colors {contactMethod === 'both'
+							? 'border-red-500 bg-red-50'
+							: 'border-gray-300'}">
+							<input
+								type="radio"
+								name="contactMethod"
+								value="both"
+								bind:group={contactMethod}
+								class="mr-3"
+							/>
+							<span class="text-lg">📱✉️ {$t('step1.contactMethodBoth')}</span>
+						</label>
 					</div>
+					{#if errors.contactMethod}
+						<p class="mt-1 text-sm text-red-600">{errors.contactMethod}</p>
+					{/if}
+					</fieldset>
 				</div>
 
 				<button
@@ -87,15 +132,6 @@
 					{$t('common.next')} →
 				</button>
 			</form>
-
-			<div class="mt-8 text-center">
-				<a
-					href="/existing-event"
-					class="text-xs text-gray-400 hover:text-gray-600 transition-colors underline"
-				>
-					{$t('step1.existingEventLink')}
-				</a>
-			</div>
 		</div>
 	</div>
 </div>

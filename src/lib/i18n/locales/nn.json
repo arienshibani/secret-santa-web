@@ -11,32 +11,46 @@
 		"success": "Suksess"
 	},
 	"step1": {
-		"title": "Secret Santa Oppsett 🎄",
+		"title": "Secret Santa 🎄",
 		"subtitle": "La oss setje opp din Secret Santa-utveksling!",
-		"eventNameLabel": "Arrangementsnamn (Valfritt)",
-		"eventNamePlaceholder": "t.d., bpk-julebord-2025",
+		"participantsLabel": "Tal på deltakarar",
+		"participantsPlaceholder": "Skriv inn tal på personar",
+		"eventNameLabel": "Arrangementsnamn (valfritt)",
+		"eventNamePlaceholder": "t.d. julebord-med-familien",
 		"eventNameHelp": "La stå tomt for å auto-generere. Bruk berre bokstavar, tal og bindestrekar.",
 		"pinLabel": "Admin-PIN",
 		"pinHelp": "Opprett ein 6-sifra PIN for å få tilgang til oversikta",
-		"participantsLabel": "Tal på deltakarar",
-		"participantsPlaceholder": "Skriv inn tal på personar",
-		"contactMethodLabel": "Føretrekt kontaktmetode",
-		"contactMethodSMS": "SMS",
-		"contactMethodEmail": "E-post",
-		"contactMethodBoth": "Begge",
+		"existingEventLink": "Allereie laga ein lek?",
+		"howItWorksTitle": "Kva er Secret Santa? 🎁",
+		"howItWorks1": "Secret Santa er ein morosam gåveutveksling der kvar person tilfeldig får tildelt ein annan person i gruppa å kjøpe gåve til. Ingen veit kven som har kven før avsløringa! Ikkje sjølve arrangøren heller.",
+		"howItWorks2": "Denne appen gjer det superenkelt: berre skriv inn alle namn og kontaktinfo, så lagar me automatisk hemmelege lenker for kvar person. Når dei klikkar på sin lenke, ser dei kven dei skal kjøpe gåve til.",
+		"howItWorks3": "Du kan sende kvar person sin hemmelege lenke via e-post eller SMS, og du kan følgje opp kven som har kjøpt sin gåve i oversikta.",
 		"validation": {
 			"participantsRequired": "Ver venleg skriv inn tal på deltakarar",
 			"participantsMin": "Du treng minst 2 deltakarar",
-			"contactMethodRequired": "Ver venleg vel ein kontaktmetode",
 			"pinRequired": "Ver venleg skriv inn ein 6-sifra PIN",
-			"pinLength": "PIN må vere nøyaktig 6 siffer",
+			"pinLength": "PIN må vere 6 siffer",
 			"eventNameInvalid": "Arrangementsnamn kan berre innehalde bokstavar, tal og bindestrekar"
+		}
+	},
+	"existingEvent": {
+		"title": "Tilgang til eksisterande lek 🎄",
+		"subtitle": "Skriv inn arrangementsnamn og PIN for å få tilgang til oversikta",
+		"eventNameLabel": "Arrangementsnamn",
+		"pinLabel": "Admin-PIN",
+		"submit": "Gå til oversikt",
+		"validation": {
+			"eventNameRequired": "Ver venleg skriv inn arrangementsnamn",
+			"pinRequired": "Ver venleg skriv inn ein 6-sifra PIN",
+			"pinLength": "PIN må vere 6 siffer",
+			"invalidCredentials": "Ugyldig arrangementsnamn eller PIN"
 		}
 	},
 	"step2": {
 		"title": "Deltakarar 🎁",
-		"subtitle": "Skriv inn detaljar for kvar deltakar",
+		"subtitle": "Skriv inn detaljar for alle {{count}} deltakarar",
 		"participant": "Deltakar",
+		"addParticipant": "Legg til deltakar",
 		"nameLabel": "Namn",
 		"namePlaceholder": "Skriv inn namn",
 		"emailLabel": "E-post",
@@ -45,7 +59,8 @@
 		"smsPlaceholder": "Skriv inn telefonnummer",
 		"validation": {
 			"nameRequired": "Namn er påkravd",
-			"contactRequired": "Minst éin kontaktmetode er påkravd"
+			"contactRequired": "Minst éin kontaktmetode er påkravd",
+			"minParticipants": "Du treng minst 2 deltakarar"
 		}
 	},
 	"results": {
@@ -54,7 +69,15 @@
 		"participant": "Deltakar",
 		"url": "Tildelings-URL",
 		"copyUrl": "Kopier URL",
-		"adminLink": "Admin-dashboard"
+		"sendEmail": "Send E-post",
+		"sendSms": "Send SMS",
+		"smsMessage": "Hei! Trykk på lenken under for å sjå din tildelte nissevenn i samband med {{eventName}}: {{url}}",
+		"emailSubject": "Din Secret Santa-tildeling for {{eventName}} 🎄",
+		"emailBody": "Hei {{name}}!\n\nTrykk på lenken under for å sjå din tildelte nissevenn i samband med {{eventName}}:\n{{url}}\n\nGod jul! 🎄🎁",
+		"adminLink": "Admin-dashboard",
+		"adminPinLabel": "Admin-PIN:",
+		"adminPinHelp": "Lagre denne PIN-en for å få tilgang til oversikta seinare",
+		"adminUrlLabel": "Oversikts-URL:"
 	},
 	"assignment": {
 		"title": "Din Secret Santa-tildeling 🎄",
