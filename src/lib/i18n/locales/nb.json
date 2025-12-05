@@ -28,6 +28,7 @@
 		"validation": {
 			"participantsRequired": "Vennligst skriv inn antall deltakere",
 			"participantsMin": "Du trenger minst 2 deltakere",
+			"participantsMax": "Maksimum 1000 deltakere tillatt",
 			"pinRequired": "Vennligst skriv inn en 6-sifret PIN",
 			"pinLength": "PIN må være 6 sifre",
 			"eventNameInvalid": "Arrangementsnavn kan kun inneholde bokstaver, tall og bindestreker"
@@ -88,6 +89,7 @@
 	},
 	"admin": {
 		"title": "Oversikt",
+		"description": "Logg inn med din admin-PIN for å få en oversikt over alle deltakere, huke av hvem som har kjøpt sin gave, og sende påminnelser.",
 		"pinPrompt": "Skriv inn admin-PIN",
 		"pinPlaceholder": "Skriv inn PIN",
 		"login": "Logg inn",
@@ -96,6 +98,7 @@
 		"name": "Navn",
 		"contact": "Kontakt",
 		"assignmentUrl": "Tildelings-URL",
+		"assignmentUrlWarning": "⚠️ Advarsel: Tildelings-URL-er inneholder personlig informasjon om hver deltakers tildelte person. Disse lenkene skal kun deles med den respektive deltakeren og ikke ses av andre.",
 		"giftReady": "Gave klar",
 		"assignedTo": "Tildelt til",
 		"showAssignees": "Vis tildelinger",
@@ -105,7 +108,12 @@
 		"clearData": "Slett alle data",
 		"clearDataWarning": "Er du sikker på at du vil slette alle data? Denne handlingen kan ikke angres.",
 		"yes": "Ja, slett alt",
-		"no": "Nei, avbryt"
+		"no": "Nei, avbryt",
+		"edit": "Rediger",
+		"save": "Lagre",
+		"cancel": "Avbryt",
+		"sendEmail": "Send E-post",
+		"sendSms": "Send SMS"
 	},
 	"language": {
 		"en": "English",

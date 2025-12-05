@@ -5,11 +5,13 @@
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import SnowEffect from '$lib/components/SnowEffect.svelte';
 	import ShowAssigneesDialog from '$lib/components/ShowAssigneesDialog.svelte';
+	import PinInput from '$lib/components/PinInput.svelte';
 	import {
 		getAllParticipants,
 		verifyAdminPin,
 		getAdminConfig,
 		updateGiftStatus,
+		updateParticipant,
 		clearAllData
 	} from '$lib/supabase/db';
 	import { getAssignmentUrl } from '$lib/utils/token';
@@ -24,6 +26,11 @@
 	let showClearDialog = false;
 	let loading = false;
 	let copiedIndex: number | null = null;
+	let editingId: string | null = null;
+	let editName = '';
+	let editEmail = '';
+	let editSms = '';
+	let savingId: string | null = null;
 
 	$: eventName = $page.params.eventName || '';
 
@@ -47,7 +54,7 @@
 
 	const handleLogin = async () => {
 		pinError = false;
-		if (!pin || !eventName) return;
+		if (!pin || pin.length !== 6 || !eventName) return;
 
 		try {
 			const valid = await verifyAdminPin(eventName, pin);
@@ -56,10 +63,12 @@
 				await loadParticipants();
 			} else {
 				pinError = true;
+				pin = ''; // Clear PIN on error
 			}
 		} catch (error) {
 			console.error('Error verifying PIN:', error);
 			pinError = true;
+			pin = ''; // Clear PIN on error
 		}
 	};
 
@@ -102,13 +111,6 @@
 		return assigned?.name || null;
 	};
 
-	const getContactInfo = (participant: Participant): string => {
-		const parts: string[] = [];
-		if (participant.email) parts.push(`📧 ${participant.email}`);
-		if (participant.sms) parts.push(`📱 ${participant.sms}`);
-		return parts.join(' | ') || 'No contact info';
-	};
-
 	const copyToClipboard = async (url: string, index: number) => {
 		try {
 			await navigator.clipboard.writeText(url);
@@ -120,6 +122,49 @@
 			console.error('Failed to copy:', error);
 		}
 	};
+
+	const startEdit = (participant: Participant) => {
+		editingId = participant.id;
+		editName = participant.name;
+		editEmail = participant.email || '';
+		editSms = participant.sms || '';
+	};
+
+	const cancelEdit = () => {
+		editingId = null;
+		editName = '';
+		editEmail = '';
+		editSms = '';
+	};
+
+	const saveEdit = async (participantId: string) => {
+		savingId = participantId;
+		try {
+			await updateParticipant(participantId, {
+				name: editName.trim(),
+				email: editEmail.trim() || null,
+				sms: editSms.trim() || null
+			});
+			await loadParticipants();
+			cancelEdit();
+		} catch (error) {
+			console.error('Error updating participant:', error);
+			alert('Error updating participant');
+		} finally {
+			savingId = null;
+		}
+	};
+
+	const getSmsUrl = (phone: string, url: string): string => {
+		const message = $t('results.smsMessage', { url, eventName: eventName || 'Secret Santa' });
+		return `sms:${phone}?body=${encodeURIComponent(message)}`;
+	};
+
+	const getEmailUrl = (email: string, participantName: string, url: string): string => {
+		const subject = $t('results.emailSubject', { eventName: eventName || 'Secret Santa' });
+		const body = $t('results.emailBody', { name: participantName, url, eventName: eventName || 'Secret Santa' });
+		return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+	};
 </script>
 
 <svelte:head>
@@ -128,38 +173,35 @@
 
 <div class="min-h-screen relative z-10 flex items-center justify-center p-4">
 	<SnowEffect />
-	<div class="max-w-6xl w-full">
+	<div class="max-w-4xl w-full">
 		<div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12">
 			<div class="flex justify-between items-start mb-6">
 				<div>
-					<h1 class="text-4xl md:text-5xl font-bold text-red-600">{$t('admin.title')}</h1>
-					{#if eventName}
-						<p class="text-sm text-gray-600 mt-1">Event: {eventName}</p>
-					{/if}
+					<h1 class="text-4xl md:text-5xl font-bold text-red-600">{eventName || $t('admin.title')}</h1>
 				</div>
 				<LanguageSwitcher />
 			</div>
 
 			{#if !authenticated}
-				<div class="max-w-md mx-auto">
-					<div class="space-y-4">
-						<label class="block text-sm font-medium text-gray-700">
-							{$t('admin.pinPrompt')}
-						</label>
-						<input
-							type="password"
-							bind:value={pin}
-							placeholder={$t('admin.pinPlaceholder')}
-							on:keydown={(e) => e.key === 'Enter' && handleLogin()}
-							class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
-						/>
-						{#if pinError}
-							<p class="text-sm text-red-600">{$t('admin.invalidPin')}</p>
-						{/if}
+				<div class="max-w-[500px] mx-auto space-y-4">
+					<p class="text-gray-600 text-sm md:text-base leading-relaxed">
+						{$t('admin.description')}
+					</p>
+					<div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+						<div class="flex-1">
+							<label class="block text-sm font-medium text-gray-700 mb-2">
+								{$t('admin.pinPrompt')}
+							</label>
+							<PinInput bind:value={pin} length={6} />
+							{#if pinError}
+								<p class="text-sm text-red-600 mt-2 text-center">{$t('admin.invalidPin')}</p>
+							{/if}
+						</div>
 						<button
 							type="button"
 							on:click={handleLogin}
-							class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+							disabled={!pin || pin.length !== 6}
+							class="bg-red-600 hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-3 px-6 rounded-lg transition-colors whitespace-nowrap mt-8 sm:mt-0"
 						>
 							{$t('admin.login')}
 						</button>
@@ -167,6 +209,12 @@
 				</div>
 			{:else}
 				<div class="space-y-6">
+					<div class="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4">
+						<p class="text-sm text-gray-800 leading-relaxed">
+							{$t('admin.assignmentUrlWarning')}
+						</p>
+					</div>
+
 					<div class="flex gap-3 flex-wrap">
 						{#if !showAssignees}
 							<ShowAssigneesDialog onConfirm={handleShowAssignees} />
@@ -196,6 +244,7 @@
 									<th class="border border-gray-300 px-4 py-2 text-left">{$t('admin.contact')}</th>
 									<th class="border border-gray-300 px-4 py-2 text-left">{$t('admin.assignmentUrl')}</th>
 									<th class="border border-gray-300 px-4 py-2 text-left">{$t('admin.giftReady')}</th>
+									<th class="border border-gray-300 px-4 py-2 text-left">Actions</th>
 									{#if showAssignees}
 										<th class="border border-gray-300 px-4 py-2 text-left">
 											{$t('admin.assignedTo')}
@@ -204,36 +253,60 @@
 								</tr>
 							</thead>
 							<tbody>
-								{#each participants as participant, i}
+								{#each participants as participant, i (participant.id)}
 									<tr class="hover:bg-gray-50">
-										<td class="border border-gray-300 px-4 py-2 font-medium">
-											{participant.name}
+										<td class="border border-gray-300 px-4 py-2">
+											{#if editingId === participant.id}
+												<input
+													type="text"
+													bind:value={editName}
+													class="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+												/>
+											{:else}
+												<span class="font-medium">{participant.name}</span>
+											{/if}
 										</td>
 										<td class="border border-gray-300 px-4 py-2 text-sm">
-											{getContactInfo(participant)}
+											{#if editingId === participant.id}
+												<div class="space-y-2">
+													<input
+														type="email"
+														bind:value={editEmail}
+														placeholder="Email"
+														class="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+													/>
+													<input
+														type="tel"
+														bind:value={editSms}
+														placeholder="Phone"
+														class="w-full px-2 py-1 border border-gray-300 rounded text-xs"
+													/>
+												</div>
+											{:else}
+												<div class="space-y-1">
+													{#if participant.email}
+														<div class="text-xs">📧 {participant.email}</div>
+													{/if}
+													{#if participant.sms}
+														<div class="text-xs">📱 {participant.sms}</div>
+													{/if}
+													{#if !participant.email && !participant.sms}
+														<span class="text-gray-400 text-xs">No contact info</span>
+													{/if}
+												</div>
+											{/if}
 										</td>
 										<td class="border border-gray-300 px-4 py-2">
-											<div class="flex items-center gap-2">
-												<a
-													href={getAssignmentUrl(participant.token)}
-													target="_blank"
-													rel="noopener noreferrer"
-													class="text-blue-600 hover:text-blue-800 underline text-xs truncate max-w-xs"
-													title={getAssignmentUrl(participant.token)}
-												>
-													{getAssignmentUrl(participant.token)}
-												</a>
-												<button
-													type="button"
-													on:click={() => copyToClipboard(getAssignmentUrl(participant.token), i)}
-													class="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-medium transition-colors whitespace-nowrap"
-													title="Copy URL"
-												>
-													{copiedIndex === i ? $t('common.copied') : $t('common.copy')}
-												</button>
-											</div>
+											<button
+												type="button"
+												on:click={() => copyToClipboard(getAssignmentUrl(participant.token), i)}
+												class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-medium transition-colors whitespace-nowrap"
+												title={getAssignmentUrl(participant.token)}
+											>
+												{copiedIndex === i ? $t('common.copied') : $t('common.copy')}
+											</button>
 										</td>
-										<td class="border border-gray-300 px-4 py-2">
+										<td class="border border-gray-300 px-4 py-2 text-center">
 											<input
 												type="checkbox"
 												checked={participant.gift_ready}
@@ -241,6 +314,70 @@
 													handleGiftStatusChange(participant.id, e.currentTarget.checked)}
 												class="w-5 h-5"
 											/>
+										</td>
+										<td class="border border-gray-300 px-4 py-2">
+											{#if editingId === participant.id}
+												<div class="flex gap-2">
+													<button
+														type="button"
+														on:click={() => saveEdit(participant.id)}
+														disabled={savingId === participant.id || !editName.trim()}
+														class="px-2 py-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white rounded text-xs font-medium transition-colors"
+													>
+														{$t('admin.save')}
+													</button>
+													<button
+														type="button"
+														on:click={cancelEdit}
+														disabled={savingId === participant.id}
+														class="px-2 py-1 bg-gray-400 hover:bg-gray-500 text-white rounded text-xs font-medium transition-colors"
+													>
+														{$t('admin.cancel')}
+													</button>
+												</div>
+											{:else}
+												<div class="flex flex-col gap-2">
+													<button
+														type="button"
+														on:click={() => startEdit(participant)}
+														class="px-2 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-xs font-medium transition-colors"
+													>
+														{$t('admin.edit')}
+													</button>
+													{#if participant.email}
+														<a
+															href={getEmailUrl(participant.email, participant.name, getAssignmentUrl(participant.token))}
+															class="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-medium transition-colors flex items-center justify-center gap-1"
+														>
+															<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																<path
+																	stroke-linecap="round"
+																	stroke-linejoin="round"
+																	stroke-width="2"
+																	d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+																/>
+															</svg>
+															{$t('admin.sendEmail')}
+														</a>
+													{/if}
+													{#if participant.sms}
+														<a
+															href={getSmsUrl(participant.sms, getAssignmentUrl(participant.token))}
+															class="px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-medium transition-colors flex items-center justify-center gap-1"
+														>
+															<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																<path
+																	stroke-linecap="round"
+																	stroke-linejoin="round"
+																	stroke-width="2"
+																	d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+																/>
+															</svg>
+															{$t('admin.sendSms')}
+														</a>
+													{/if}
+												</div>
+											{/if}
 										</td>
 										{#if showAssignees}
 											<td class="border border-gray-300 px-4 py-2">
@@ -267,7 +404,7 @@
 		on:keydown={(e) => e.key === 'Escape' && (showClearDialog = false)}
 	>
 		<div
-			class="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl"
+			class="bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl"
 			on:click|stopPropagation
 			role="dialog"
 			aria-modal="true"

@@ -28,7 +28,7 @@
 		on:keydown={(e) => e.key === 'Escape' && (showDialog = false)}
 	>
 		<div
-			class="bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl"
+			class="bg-white rounded-lg p-6 max-w-sm mx-4 shadow-xl"
 			on:click|stopPropagation
 			role="dialog"
 			aria-modal="true"

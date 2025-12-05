@@ -11,12 +11,19 @@
 	let pinArray: string[] = Array(length).fill('');
 	let focusedIndex: number | null = null;
 	let showPin = false; // Toggle for showing/hiding PIN
+	let isInternalUpdate = false; // Flag to prevent reactive loop
 
 	const updateValue = () => {
 		const newValue = pinArray.join('');
+		// Always update the value synchronously to ensure parent component sees it immediately
 		if (newValue !== value) {
+			isInternalUpdate = true;
 			value = newValue;
 			dispatch('input', { value: newValue });
+			// Reset flag asynchronously to allow external updates
+			setTimeout(() => {
+				isInternalUpdate = false;
+			}, 0);
 		}
 	};
 
@@ -96,6 +103,7 @@
 			}
 		}
 
+		// Always update value immediately and synchronously
 		updateValue();
 	};
 
@@ -124,6 +132,8 @@
 		// Small delay to ensure the last filled index is updated
 		setTimeout(() => {
 			updateAllDisplays();
+			// Ensure value is synced when losing focus
+			updateValue();
 		}, 10);
 	};
 
@@ -150,23 +160,35 @@
 	};
 
 	$: {
-		if (value && value.length === length) {
-			// Sync external value changes
-			const digits = value.split('');
-			digits.forEach((digit, i) => {
-				if (i < length) {
-					pinArray[i] = digit;
+		// Only sync external changes, not internal updates
+		if (!isInternalUpdate) {
+			const currentPinValue = pinArray.join('');
+			// Only sync if external value is different from internal state
+			if (value !== currentPinValue) {
+				if (value && value.length <= length) {
+					// Sync external value changes to internal array
+					const digits = value.split('');
+					digits.forEach((digit, i) => {
+						if (i < length) {
+							pinArray[i] = digit;
+						}
+					});
+					// Clear any remaining slots
+					for (let i = digits.length; i < length; i++) {
+						pinArray[i] = '';
+					}
+					updateAllDisplays();
+				} else if (!value) {
+					// Clear all if value is empty
+					pinArray = Array(length).fill('');
+					inputs.forEach((input) => {
+						if (input) {
+							input.value = '';
+							input.classList.remove('pin-masked');
+						}
+					});
 				}
-			});
-			updateAllDisplays();
-		} else if (!value) {
-			pinArray = Array(length).fill('');
-			inputs.forEach((input) => {
-				if (input) {
-					input.value = '';
-					input.classList.remove('pin-masked');
-				}
-			});
+			}
 		}
 	}
 

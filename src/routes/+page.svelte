@@ -19,6 +19,10 @@
 			errors.numParticipants = $t('step1.validation.participantsMin');
 			return false;
 		}
+		if (num > 1000) {
+			errors.numParticipants = $t('step1.validation.participantsMax');
+			return false;
+		}
 		return true;
 	};
 
@@ -60,6 +64,7 @@
 						id="numParticipants"
 						type="number"
 						min="2"
+						max="1000"
 						bind:value={numParticipants}
 						placeholder={$t('step1.participantsPlaceholder')}
 						class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"

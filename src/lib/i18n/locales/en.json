@@ -28,6 +28,7 @@
 		"validation": {
 			"participantsRequired": "Please enter the number of participants",
 			"participantsMin": "You need at least 2 participants",
+			"participantsMax": "Maximum 1000 participants allowed",
 			"pinRequired": "Please enter a 6-digit PIN",
 			"pinLength": "PIN must be 6 digits",
 			"eventNameInvalid": "Event name can only contain letters, numbers, and hyphens"
@@ -88,6 +89,7 @@
 	},
 	"admin": {
 		"title": "Admin Dashboard",
+		"description": "Log in with your admin PIN to get an overview of all participants, check off who has bought their gift, and send reminders.",
 		"pinPrompt": "Enter Admin PIN",
 		"pinPlaceholder": "Enter PIN",
 		"login": "Login",
@@ -96,7 +98,8 @@
 		"name": "Name",
 		"contact": "Contact",
 		"assignmentUrl": "Assignment URL",
-		"giftReady": "Gift Rhttp://localhost:5173/eady",
+		"assignmentUrlWarning": "⚠️ Warning: Assignment URLs contain personal information about each participant's assigned person. These links should only be shared with the respective participant and not viewed by anyone else.",
+		"giftReady": "Gift Ready",
 		"assignedTo": "Assigned To",
 		"showAssignees": "Show Assignees",
 		"hideAssignees": "Hide Assignees",
@@ -105,7 +108,12 @@
 		"clearData": "Clear All Data",
 		"clearDataWarning": "Are you sure you want to clear all data? This action cannot be undone.",
 		"yes": "Yes, Clear All",
-		"no": "No, Cancel"
+		"no": "No, Cancel",
+		"edit": "Edit",
+		"save": "Save",
+		"cancel": "Cancel",
+		"sendEmail": "Send Email",
+		"sendSms": "Send SMS"
 	},
 	"language": {
 		"en": "English",

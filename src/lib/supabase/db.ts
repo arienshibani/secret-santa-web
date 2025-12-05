@@ -85,6 +85,18 @@ export const updateGiftStatus = async (participantId: string, giftReady: boolean
 	if (error) throw error;
 };
 
+export const updateParticipant = async (
+	participantId: string,
+	updates: { name?: string; email?: string | null; sms?: string | null }
+): Promise<void> => {
+	const { error } = await supabase
+		.from('participants')
+		.update(updates)
+		.eq('id', participantId);
+
+	if (error) throw error;
+};
+
 export const getAdminConfig = async (eventName: string): Promise<AdminConfig | null> => {
 	const { data, error } = await supabase
 		.from('admin_config')
