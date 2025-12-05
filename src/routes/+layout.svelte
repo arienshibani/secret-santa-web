@@ -3,7 +3,7 @@
 	import AuroraBackground from '$lib/components/AuroraBackground.svelte';
 
 	// Update this with your actual GitHub repo URL
-	const githubRepoUrl = 'https://github.com/yourusername/secret-santa-web';
+	const githubRepoUrl = 'https://github.com/arienshibani/secret-santa-web';
 </script>
 
 <AuroraBackground />
