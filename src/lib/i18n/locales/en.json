@@ -1,0 +1,93 @@
+{
+	"common": {
+		"next": "Next",
+		"back": "Back",
+		"submit": "Submit",
+		"cancel": "Cancel",
+		"copy": "Copy",
+		"copied": "Copied!",
+		"loading": "Loading...",
+		"error": "Error",
+		"success": "Success"
+	},
+	"step1": {
+		"title": "Secret Santa Setup 🎄",
+		"subtitle": "Let's set up your Secret Santa exchange!",
+		"eventNameLabel": "Event Name (Optional)",
+		"eventNamePlaceholder": "e.g., bpk-julebord-2025",
+		"eventNameHelp": "Leave empty to auto-generate. Use letters, numbers, and hyphens only.",
+		"pinLabel": "Admin PIN",
+		"pinHelp": "Create a 6-digit PIN to access the admin dashboard",
+		"participantsLabel": "Number of Participants",
+		"participantsPlaceholder": "Enter number of people",
+		"contactMethodLabel": "Preferred Contact Method",
+		"contactMethodSMS": "SMS",
+		"contactMethodEmail": "Email",
+		"contactMethodBoth": "Both",
+		"validation": {
+			"participantsRequired": "Please enter the number of participants",
+			"participantsMin": "You need at least 2 participants",
+			"contactMethodRequired": "Please select a contact method",
+			"pinRequired": "Please enter a 6-digit PIN",
+			"pinLength": "PIN must be exactly 6 digits",
+			"eventNameInvalid": "Event name can only contain letters, numbers, and hyphens"
+		}
+	},
+	"step2": {
+		"title": "Participant Information 🎁",
+		"subtitle": "Enter details for each participant",
+		"participant": "Participant",
+		"nameLabel": "Name",
+		"namePlaceholder": "Enter name",
+		"emailLabel": "Email",
+		"emailPlaceholder": "Enter email",
+		"smsLabel": "Phone Number",
+		"smsPlaceholder": "Enter phone number",
+		"validation": {
+			"nameRequired": "Name is required",
+			"contactRequired": "At least one contact method is required"
+		}
+	},
+	"results": {
+		"title": "Assignments Ready! 🎅",
+		"subtitle": "Share these URLs with each participant",
+		"participant": "Participant",
+		"url": "Assignment URL",
+		"copyUrl": "Copy URL",
+		"adminLink": "Admin Dashboard"
+	},
+	"assignment": {
+		"title": "Your Secret Santa Assignment 🎄",
+		"greeting": "Hello, {{name}}!",
+		"assignedTo": "You are assigned to buy a gift for",
+		"invalidToken": "Invalid or expired assignment link",
+		"loading": "Loading your assignment..."
+	},
+	"admin": {
+		"title": "Admin Dashboard",
+		"pinPrompt": "Enter Admin PIN",
+		"pinPlaceholder": "Enter PIN",
+		"login": "Login",
+		"invalidPin": "Invalid PIN",
+		"participants": "Participants",
+		"name": "Name",
+		"contact": "Contact",
+		"assignmentUrl": "Assignment URL",
+		"giftReady": "Gift Rhttp://localhost:5173/eady",
+		"assignedTo": "Assigned To",
+		"showAssignees": "Show Assignees",
+		"hideAssignees": "Hide Assignees",
+		"showAssigneesWarning": "Are you sure you want to reveal all assignments? This will show who is assigned to whom.",
+		"confirm": "Confirm",
+		"clearData": "Clear All Data",
+		"clearDataWarning": "Are you sure you want to clear all data? This action cannot be undone.",
+		"yes": "Yes, Clear All",
+		"no": "No, Cancel"
+	},
+	"language": {
+		"en": "English",
+		"nb": "Norsk",
+		"nn": "Nynorsk"
+	}
+}
+

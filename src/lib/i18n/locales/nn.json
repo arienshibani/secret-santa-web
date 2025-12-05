@@ -1,0 +1,93 @@
+{
+	"common": {
+		"next": "Neste",
+		"back": "Tilbake",
+		"submit": "Send inn",
+		"cancel": "Avbryt",
+		"copy": "Kopier",
+		"copied": "Kopiert!",
+		"loading": "Lastar...",
+		"error": "Feil",
+		"success": "Suksess"
+	},
+	"step1": {
+		"title": "Secret Santa Oppsett 🎄",
+		"subtitle": "La oss setje opp din Secret Santa-utveksling!",
+		"eventNameLabel": "Arrangementsnamn (Valfritt)",
+		"eventNamePlaceholder": "t.d., bpk-julebord-2025",
+		"eventNameHelp": "La stå tomt for å auto-generere. Bruk berre bokstavar, tal og bindestrekar.",
+		"pinLabel": "Admin-PIN",
+		"pinHelp": "Opprett ein 6-sifra PIN for å få tilgang til oversikta",
+		"participantsLabel": "Tal på deltakarar",
+		"participantsPlaceholder": "Skriv inn tal på personar",
+		"contactMethodLabel": "Føretrekt kontaktmetode",
+		"contactMethodSMS": "SMS",
+		"contactMethodEmail": "E-post",
+		"contactMethodBoth": "Begge",
+		"validation": {
+			"participantsRequired": "Ver venleg skriv inn tal på deltakarar",
+			"participantsMin": "Du treng minst 2 deltakarar",
+			"contactMethodRequired": "Ver venleg vel ein kontaktmetode",
+			"pinRequired": "Ver venleg skriv inn ein 6-sifra PIN",
+			"pinLength": "PIN må vere nøyaktig 6 siffer",
+			"eventNameInvalid": "Arrangementsnamn kan berre innehalde bokstavar, tal og bindestrekar"
+		}
+	},
+	"step2": {
+		"title": "Deltakarar 🎁",
+		"subtitle": "Skriv inn detaljar for kvar deltakar",
+		"participant": "Deltakar",
+		"nameLabel": "Namn",
+		"namePlaceholder": "Skriv inn namn",
+		"emailLabel": "E-post",
+		"emailPlaceholder": "Skriv inn e-post",
+		"smsLabel": "Telefonnummer",
+		"smsPlaceholder": "Skriv inn telefonnummer",
+		"validation": {
+			"nameRequired": "Namn er påkravd",
+			"contactRequired": "Minst éin kontaktmetode er påkravd"
+		}
+	},
+	"results": {
+		"title": "Tildelingar klare! 🎅",
+		"subtitle": "Del desse URL-ane med kvar deltakar",
+		"participant": "Deltakar",
+		"url": "Tildelings-URL",
+		"copyUrl": "Kopier URL",
+		"adminLink": "Admin-dashboard"
+	},
+	"assignment": {
+		"title": "Din Secret Santa-tildeling 🎄",
+		"greeting": "Hei, {{name}}!",
+		"assignedTo": "Du er tildelt å kjøpe ei gåve til",
+		"invalidToken": "Ugyldig eller utløpt tildelingslenke",
+		"loading": "Lastar din tildeling..."
+	},
+	"admin": {
+		"title": "Admin-dashboard",
+		"pinPrompt": "Skriv inn admin-PIN",
+		"pinPlaceholder": "Skriv inn PIN",
+		"login": "Logg inn",
+		"invalidPin": "Ugyldig PIN",
+		"participants": "Deltakarar",
+		"name": "Namn",
+		"contact": "Kontakt",
+		"assignmentUrl": "Tildelings-URL",
+		"giftReady": "Gåve klar",
+		"assignedTo": "Tildelt til",
+		"showAssignees": "Vis tildelingar",
+		"hideAssignees": "Gøym tildelingar",
+		"showAssigneesWarning": "Er du sikker på at du vil avsløre alle tildelingar? Dette vil vise kven som er tildelt kven.",
+		"confirm": "Stadfest",
+		"clearData": "Slett alle data",
+		"clearDataWarning": "Er du sikker på at du vil slette alle data? Denne handlinga kan ikkje angrast.",
+		"yes": "Ja, slett alt",
+		"no": "Nei, avbryt"
+	},
+	"language": {
+		"en": "English",
+		"nb": "Norsk",
+		"nn": "Nynorsk"
+	}
+}
+
